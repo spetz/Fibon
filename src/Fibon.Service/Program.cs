@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 
 namespace Fibon.Service
 {
@@ -12,8 +13,14 @@ namespace Fibon.Service
     {
         public static void Main(string[] args)
         {
+            var config = new ConfigurationBuilder()
+                            .AddEnvironmentVariables()
+                            .AddCommandLine(args)
+                            .Build();
+
             var host = new WebHostBuilder()
                 .UseKestrel()
+                .UseConfiguration(config)
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
                 .UseStartup<Startup>()
