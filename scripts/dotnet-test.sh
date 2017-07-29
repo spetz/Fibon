@@ -1,2 +1,2 @@
-cd tests/Fibon.tests
+cd tests/Fibon.Tests
 dotnet test
