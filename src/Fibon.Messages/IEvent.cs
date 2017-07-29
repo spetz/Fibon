@@ -6,7 +6,7 @@ namespace Fibon.Messages
     {   
     }
 
-    public class ValueCalculated : IEvent
+    public class ValueCalculatedEvent : IEvent
     {
         public int Number { get; set; }
         public int Result { get; set; }
