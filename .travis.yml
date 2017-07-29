@@ -1,0 +1,21 @@
+language: csharp
+dist: trusty
+sudo: required
+mono: none
+dotnet: 1.0.1
+branches:
+  only:
+    - master
+    - develop
+before_script:
+  - chmod -R a+x scripts
+script:
+  - ./scripts/dotnet-build.sh
+  - ./scripts/dotnet-test.sh
+  - ./scripts/buildImages.sh
+after_success:
+  - ./scripts/after-success.sh
+notifications:
+  email:
+    on_success: never
+    on_failure: always
