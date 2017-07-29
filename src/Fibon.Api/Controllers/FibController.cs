@@ -46,9 +46,4 @@ namespace Fibon.Api.Controllers
             return Accepted($"fib/{number}", null);
         }
     }
-
-    public interface IRepository
-    {
-        int? Get(int number);
-    }
 }
