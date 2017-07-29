@@ -32,6 +32,7 @@ namespace Fibon.Api
         {
             // Add framework services.
             services.AddMvc();
+            services.AddSingleton<IRepository>(_ => new InMemoryRepository());
             ConfigureRabbitMq(services);
             //services.Configure<RabbitMqOptions>(Configuration.GetSection("rabbitmq"));
         }
