@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Fibon.Api.Framework;
 using Fibon.Api.Handlers;
 using Fibon.Messages;
+using Fibon.Messages.Events;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -79,10 +80,10 @@ namespace Fibon.Api
         private void ConfigureRabbitMqSubscriptions(IApplicationBuilder app)
         {
             IBusClient client = app.ApplicationServices.GetService<IBusClient>();
-            var handler = app.ApplicationServices.GetService<IEventHandler<ValueCalculatedEvent>>();
-            client.SubscribeAsync<ValueCalculatedEvent>(msg => handler.HandleAsync(msg),
+            var handler = app.ApplicationServices.GetService<IEventHandler<ValueCalculated>>();
+            client.SubscribeAsync<ValueCalculated>(msg => handler.HandleAsync(msg),
                 ctx => ctx.UseConsumerConfiguration(cfg => 
-                    cfg.FromDeclaredQueue(q => q.WithName(GetExchangeName<ValueCalculatedEvent>()))));
+                    cfg.FromDeclaredQueue(q => q.WithName(GetExchangeName<ValueCalculated>()))));
         }
         private void ConfigureRabbitMq(IServiceCollection services)
         {
@@ -95,7 +96,7 @@ namespace Fibon.Api
                 ClientConfiguration  = options
             });
             services.AddSingleton<IBusClient>(_ => client);
-            services.AddTransient<IEventHandler<ValueCalculatedEvent>, ValueCalculatedEventHandler>();
+            services.AddScoped<IEventHandler<ValueCalculated>, ValueCalculatedHandler>();
         }
 
         private static string GetExchangeName<T>(string name = null)

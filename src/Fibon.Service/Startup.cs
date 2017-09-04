@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Fibon.Messages;
+using Fibon.Messages.Commands;
 using Fibon.Service.Framework;
 using Fibon.Service.Handlers;
 using Microsoft.AspNetCore.Builder;
@@ -77,10 +78,10 @@ namespace Fibon.Service
         private void ConfigureRabbitMqSubscriptions(IApplicationBuilder app)
         {
             IBusClient client = app.ApplicationServices.GetService<IBusClient>();
-            var handler = app.ApplicationServices.GetService<ICommandHandler<CalculateValueCommand>>();
-            client.SubscribeAsync<CalculateValueCommand>(msg => handler.HandleAsync(msg),
+            var handler = app.ApplicationServices.GetService<ICommandHandler<CalculateValue>>();
+            client.SubscribeAsync<CalculateValue>(msg => handler.HandleAsync(msg),
                 ctx => ctx.UseConsumerConfiguration(cfg => 
-                    cfg.FromDeclaredQueue(q => q.WithName(GetExchangeName<CalculateValueCommand>()))));
+                    cfg.FromDeclaredQueue(q => q.WithName(GetExchangeName<CalculateValue>()))));
         }
 
         private void ConfigureRabbitMq(IServiceCollection services)
@@ -95,7 +96,7 @@ namespace Fibon.Service
             });
             services.AddSingleton<IBusClient>(_ => client);
             services.AddSingleton<ICalculator>(_ => new Fast());
-            services.AddTransient<ICommandHandler<CalculateValueCommand>, CalculateValueCommandHandler>();
+            services.AddTransient<ICommandHandler<CalculateValue>, CalculateValueHandler>();
         }
 
         private static string GetExchangeName<T>(string name = null)

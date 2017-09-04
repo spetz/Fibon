@@ -11,6 +11,7 @@ services:
     build: ../src/Fibon.Api
     links:
       - rabbitmq
+      - elkx
     ports:
       - '5000:5000'
 
@@ -18,6 +19,7 @@ services:
     build: ../src/Fibon.Service
     links:
       - rabbitmq
+      - elkx
     ports:
       - '5050:5050'
 
@@ -25,3 +27,10 @@ services:
     image: rabbitmq:latest
     ports:
       - '5672:5672'
+
+  elkx:
+    image: sebp/elkx:latest
+    ports:
+      - '5044:5044'
+      - '5601:5601'
+      - '9200:9200'
