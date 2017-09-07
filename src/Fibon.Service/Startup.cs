@@ -56,7 +56,7 @@ namespace Fibon.Service
             Log.Logger = new LoggerConfiguration()
                .Enrich.FromLogContext()
                .MinimumLevel.Is(level)
-               .WriteTo.Elasticsearch().WriteTo.Elasticsearch(
+               .WriteTo.Elasticsearch(
                     new ElasticsearchSinkOptions(new Uri(serilogOptions.ApiUrl))
                     {
                         MinimumLogEventLevel = level,
