@@ -2,7 +2,7 @@ version: "2"
 
 services:
   fibon-api:
-    image: spetz/fibon-api
+    image: spetz/fibon-api:latest
     links:
       - rabbitmq
       - elkx
@@ -10,7 +10,7 @@ services:
       - '5000:5000'
 
   fibon-service:
-    image: spetz/fibon-service
+    image: spetz/fibon-service:latest
     links:
       - rabbitmq
       - elkx
