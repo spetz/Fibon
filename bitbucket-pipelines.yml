@@ -19,7 +19,7 @@ pipelines:
           - ./scripts/dotnet-build.sh
           - ./scripts/dotnet-test.sh
           - ./scripts/dotnet-publish.sh
-          - ./scripts/docker-publish.sh
+          - ./scripts/docker-publish-pipelines.sh
           - ./scripts/after-success.sh
     develop:
       - step:
@@ -30,5 +30,5 @@ pipelines:
           - ./scripts/dotnet-build.sh
           - ./scripts/dotnet-test.sh
           - ./scripts/dotnet-publish.sh
-          - ./scripts/docker-publish.sh
+          - ./scripts/docker-publish-pipelines.sh
           - ./scripts/after-success.sh

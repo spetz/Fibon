@@ -13,7 +13,7 @@ script:
   - ./scripts/dotnet-build.sh
   - ./scripts/dotnet-test.sh
   - ./scripts/dotnet-publish.sh
-  - ./scripts/docker-publish.sh
+  - ./scripts/docker-publish-travis.sh
 after_success:
   - ./scripts/after-success.sh
 notifications:
