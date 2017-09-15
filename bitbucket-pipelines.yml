@@ -16,6 +16,7 @@ pipelines:
           - dotnetcore      
           script:
           - export DOCKER_ENV=production
+          - chmod -R a+x scripts
           - ./scripts/dotnet-build.sh
           - ./scripts/dotnet-test.sh
           - ./scripts/dotnet-publish.sh
@@ -27,6 +28,7 @@ pipelines:
           - dotnetcore      
           script:
           - export DOCKER_ENV=development
+          - chmod -R a+x scripts
           - ./scripts/dotnet-build.sh
           - ./scripts/dotnet-test.sh
           - ./scripts/dotnet-publish.sh
