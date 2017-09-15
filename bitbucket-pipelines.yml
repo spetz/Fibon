@@ -3,16 +3,32 @@
 # Only use spaces to indent your .yml configuration.
 # -----
 # You can specify a custom docker image from Docker Hub as your build environment.
-image: microsoft/dotnet:onbuild
+image: microsoft/dotnet:2.0.0-sdk
+
+options:
+  docker: true
 
 pipelines:
-  default:
-    - step:
-        caches:
-          - dotnetcore
-        script: # Modify the commands below to build your repository.
-          - export PROJECT_NAME=yourProjectName
-          - export TEST_NAME=yourTestName
-          - dotnet restore
-          - dotnet build $PROJECT_NAME
-          - dotnet test $TEST_NAME
+  branches:
+    master:
+      - step:
+          caches:
+          - dotnetcore      
+          script:
+          - export DOCKER_ENV=production
+          - ./scripts/dotnet-build.sh
+          - ./scripts/dotnet-test.sh
+          - ./scripts/dotnet-publish.sh
+          - ./scripts/docker-build.sh
+          - ./scripts/docker-publish-ci.sh
+    develop:
+      - step:
+          caches:
+          - dotnetcore      
+          script:
+          - export DOCKER_ENV=development
+          - ./scripts/dotnet-build.sh
+          - ./scripts/dotnet-test.sh
+          - ./scripts/dotnet-publish.sh
+          - ./scripts/docker-build.sh
+          - ./scripts/docker-publish-ci.sh
