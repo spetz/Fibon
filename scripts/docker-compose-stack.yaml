@@ -1,14 +1,8 @@
 version: "2"
 
 services:
-  start_dependencies:
-    image: dadarek/wait-for-dependencies
-    depends_on:
-      - rabbitmq
-    command: rabbitmq:5672
-
   fibon-api:
-    build: ../src/Fibon.Api
+    image: spetz/fibon-api
     links:
       - rabbitmq
       - elkx
@@ -16,7 +10,7 @@ services:
       - '5000:5000'
 
   fibon-service:
-    build: ../src/Fibon.Service
+    image: spetz/fibon-service
     links:
       - rabbitmq
       - elkx
