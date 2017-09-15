@@ -20,7 +20,7 @@ pipelines:
           - ./scripts/dotnet-test.sh
           - ./scripts/dotnet-publish.sh
           - ./scripts/docker-build.sh
-          - ./scripts/docker-publish-.sh
+          - ./scripts/docker-publish.sh
     develop:
       - step:
           caches:
