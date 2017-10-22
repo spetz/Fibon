@@ -1,25 +1,23 @@
 version: "2"
 
 services:
-  start_dependencies:
+  start-dependencies:
     image: dadarek/wait-for-dependencies
     depends_on:
       - rabbitmq
     command: rabbitmq:5672
 
   fibon-api:
-    build: ../src/Fibon.Api
+    image: fibon.api
     links:
       - rabbitmq
-      - elkx
     ports:
       - '5000:5000'
 
   fibon-service:
-    build: ../src/Fibon.Service
+    image: fibon.service
     links:
       - rabbitmq
-      - elkx
     ports:
       - '5050:5050'
 
@@ -27,16 +25,3 @@ services:
     image: rabbitmq:latest
     ports:
       - '5672:5672'
-
-  elkx:
-    image: sebp/elkx:latest
-    volumes:
-      - elk-data:/var/lib/elasticsearch
-    ports:
-      - '5044:5044'
-      - '5601:5601'
-      - '9200:9200'
-
-volumes:
-  elk-data:
-    external: false
